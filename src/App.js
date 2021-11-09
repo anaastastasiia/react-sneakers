@@ -40,7 +40,8 @@ function App() {
               title={obj.title}
               price={obj.price}
               image={obj.image}
-              onClick={() => console.log(obj)}
+              onClickLike={() => console.log("Like")}
+              onClickPlus={() => console.log("Plus")}
             />
           ))}
         </div>

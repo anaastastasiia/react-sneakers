@@ -1,13 +1,17 @@
 import React from "react";
 import styles from "./ProductItem.module.scss";
+import { useState } from "react";
 
 function ProductItem(props) {
-  const onClickButton = () => {
-    alert(props.title);
+  const [isAdded, setIsAdded] = useState(false);
+
+  const onClickPlus = () => {
+    setIsAdded(!isAdded);
   };
+
   return (
     <div className={styles.card}>
-      <div className={styles.like}>
+      <div className={styles.like} onClick={props.onClickLike}>
         <img src="img/unliked.svg" alt="Unliked" />
       </div>
       <img width={133} height={112} src={props.image} alt="Sneakers" />
@@ -17,9 +21,12 @@ function ProductItem(props) {
           <span>Cena:</span>
           <b>{props.price} zł.</b>
         </div>
-        <button className={styles.button} onClick={props.onClick}>
-          <img width={11} height={11} src="/img/btn-add.svg" alt="Plus" />
-        </button>
+        <img
+          className={styles.button}
+          onClick={onClickPlus}
+          src={isAdded ? "/img/added-btn.svg" : "/img/add-btn.svg"}
+          alt="Plus"
+        />
       </div>
     </div>
   );
