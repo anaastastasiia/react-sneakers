@@ -2,28 +2,29 @@ import React from "react";
 import styles from "./ProductItem.module.scss";
 import { useState } from "react";
 
-function ProductItem(props) {
+function ProductItem({ image, title, price, onClickLike, onClickPlus }) {
   const [isAdded, setIsAdded] = useState(false);
 
-  const onClickPlus = () => {
+  const onPlus = () => {
+    onClickPlus({ image, title, price });
     setIsAdded(!isAdded);
   };
 
   return (
     <div className={styles.card}>
-      <div className={styles.like} onClick={props.onClickLike}>
+      <div className={styles.like} onClick={onClickLike}>
         <img src="img/unliked.svg" alt="Unliked" />
       </div>
-      <img width={133} height={112} src={props.image} alt="Sneakers" />
-      <h5>{props.title}</h5>
+      <img width={133} height={112} src={image} alt="Sneakers" />
+      <h5>{title}</h5>
       <div className={styles.costBlock}>
         <div className={styles.cost}>
           <span>Cena:</span>
-          <b>{props.price} zł.</b>
+          <b>{price} zł.</b>
         </div>
         <img
           className={styles.button}
-          onClick={onClickPlus}
+          onClick={onPlus}
           src={isAdded ? "/img/added-btn.svg" : "/img/add-btn.svg"}
           alt="Plus"
         />
