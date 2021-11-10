@@ -50,7 +50,9 @@ header{
   }
   .user-item {
     justify-content: center;
+    cursor: pointer;
     display: flex;
+    
     span {
     font-weight: 600;
     font-size: 14px;
@@ -159,7 +161,6 @@ header{
 
   .drawer-items{
     overflow: auto;
-    margin-bottom: 40px;
   }
   h2{
     display: flex;
@@ -238,7 +239,6 @@ header{
 }
 .card-item{
   display: flex;
-}
-.drawer-overlay{
-  display: none;
+  flex-wrap: wrap;
+  justify-content: center;
 }

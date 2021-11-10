@@ -1,15 +1,16 @@
 import React from "react";
 
-function DrawerCart() {
+function DrawerCart(props) {
   return (
     <div className="drawer-overlay">
       <div className="drawer">
         <h2>
           Koszyk{" "}
           <img
+            onClick={props.onCloseCart}
             className="remove-btn"
             src="img/remove-active.svg"
-            alt="Remove"
+            alt="Close"
           />
         </h2>
 

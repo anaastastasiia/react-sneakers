@@ -1,31 +1,26 @@
 import ProductItem from "./components/ProductItem/ProductItem";
 import Header from "./components/Header";
 import DrawerCart from "./components/DrawerCart";
-
-const sneakersArray = [
-  {
-    title: "Mięskie Nike Blazer Mid Suede",
-    price: 119,
-    image: "/img/sneakers/1.jpg",
-  },
-  {
-    title: "Mięskie Nike Air Max 270",
-    price: 219,
-    image: "/img/sneakers/2.jpg",
-  },
-  {
-    title: "Puma X Aka Boku Future Rider",
-    price: 259,
-    image: "/img/sneakers/3.jpg",
-  },
-  { title: "Under Armour Curry 8", price: 369, image: "/img/sneakers/4.jpg" },
-];
+import { useEffect, useState } from "react";
 
 function App() {
+  const [sneakersArray, setSneakersArray] = useState([]);
+  const [cartOpened, setCartOpened] = useState(false);
+
+  useEffect(() => {
+    fetch("https://618be293ded7fb0017bb92a9.mockapi.io/items")
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        setSneakersArray(json);
+      });
+  }, []);
+
   return (
     <div className="wrapper ">
-      <DrawerCart />
-      <Header />
+      {cartOpened && <DrawerCart onCloseCart={() => setCartOpened(false)} />}
+      <Header onClickCart={() => setCartOpened(true)} />
       <div className="content">
         <div className="header-content">
           <h1>Wszystkie adidasy</h1>
