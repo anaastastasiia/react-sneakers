@@ -1,6 +1,6 @@
 import React from "react";
 
-function DrawerCart({ onCloseCart, sneakersArray = [] }) {
+function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
   return (
     <div className="drawer-overlay">
       <div className="drawer">
@@ -25,6 +25,7 @@ function DrawerCart({ onCloseCart, sneakersArray = [] }) {
                 <b>{obj.price} zł.</b>
               </div>
               <img
+                onClick={() => onRemove(obj.id)}
                 className="remove-btn"
                 src="img/remove-active.svg"
                 alt="Remove"

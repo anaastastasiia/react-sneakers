@@ -2,34 +2,47 @@ import ProductItem from "./components/ProductItem/ProductItem";
 import Header from "./components/Header";
 import DrawerCart from "./components/DrawerCart";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 function App() {
   const [sneakersArray, setSneakersArray] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [seacrhValue, setSeacrhValue] = useState("");
   const [cartOpened, setCartOpened] = useState(false);
 
   useEffect(() => {
-    fetch("https://618be293ded7fb0017bb92a9.mockapi.io/items")
+    axios
+      .get("https://618be293ded7fb0017bb92a9.mockapi.io/items")
       .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        setSneakersArray(json);
+        setSneakersArray(res.data);
+      });
+    axios
+      .get("https://618be293ded7fb0017bb92a9.mockapi.io/cart")
+      .then((res) => {
+        setCartItems(res.data);
       });
   }, []);
 
   const onAddToCart = (obj) => {
+    axios.post("https://618be293ded7fb0017bb92a9.mockapi.io/cart", obj);
     setCartItems((prev) => [...prev, obj]);
-    // console.log(obj);
   };
 
-  console.log(cartItems);
+  const onRemoveItem = (id) => {
+    // axios.delete(`https://618be293ded7fb0017bb92a9.mockapi.io/cart/${id}`);
+    setCartItems((prev) => prev.filter((item) => item.id != id));
+  };
+
+  const onChangeSearchInput = (event) => {
+    setSeacrhValue(event.target.value);
+  };
   return (
     <div className="wrapper ">
       {cartOpened && (
         <DrawerCart
           sneakersArray={cartItems}
           onCloseCart={() => setCartOpened(false)}
+          onRemove={onRemoveItem}
         />
       )}
       <Header onClickCart={() => setCartOpened(true)} />
@@ -38,19 +51,27 @@ function App() {
           <h1>Wszystkie adidasy</h1>
           <div className="search-block">
             <img src="/img/search.svg" alt="Search" />
-            <input tye="text" placeholder="Szukaj..." />
+            <input
+              onChange={onChangeSearchInput}
+              type="text"
+              placeholder="Szukaj..."
+            />
           </div>
         </div>
         <div className="card-item">
-          {sneakersArray.map((item) => (
-            <ProductItem
-              title={item.title}
-              price={item.price}
-              image={item.image}
-              onClickLike={() => console.log("Like")}
-              onClickPlus={(obj) => onAddToCart(obj)}
-            />
-          ))}
+          {sneakersArray
+            .filter((item) =>
+              item.title.toLowerCase().includes(seacrhValue.toLowerCase())
+            )
+            .map((item) => (
+              <ProductItem
+                title={item.title}
+                price={item.price}
+                image={item.image}
+                onClickLike={() => console.log("Like")}
+                onClickPlus={(obj) => onAddToCart(obj)}
+              />
+            ))}
         </div>
       </div>
     </div>
