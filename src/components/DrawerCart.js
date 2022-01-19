@@ -64,7 +64,7 @@ function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
             <img src="/img/empty-cart.png" alt="CartEmpty" />
             <h2>Koszyk jest pusty</h2>
             <p>Dodaj cokolwiek do zamówienia ;)</p>
-            <button className="green-button">
+            <button onClick={onCloseCart} className="green-button">
               <img src="/img/arrow.svg" alt="Arrow" />
               Wróc
             </button>
