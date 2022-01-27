@@ -1,4 +1,5 @@
 import ProductItem from "./components/ProductItem/ProductItem";
+import {Routes} from "react-router-dom"
 import Header from "./components/Header";
 import DrawerCart from "./components/DrawerCart";
 import { useEffect, useState } from "react";
@@ -7,6 +8,7 @@ import axios from "axios";
 function App() {
   const [sneakersArray, setSneakersArray] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [seacrhValue, setSeacrhValue] = useState("");
   const [cartOpened, setCartOpened] = useState(false);
 
@@ -33,6 +35,11 @@ function App() {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const onAddToFavorite = (obj) => {
+    axios.post("https://618be293ded7fb0017bb92a9.mockapi.io/favorites", obj);
+    setFavorites((prev) => [...prev, obj]);
+  };
+
   const onChangeSearchInput = (event) => {
     setSeacrhValue(event.target.value);
   };
@@ -46,6 +53,9 @@ function App() {
         />
       )}
       <Header onClickCart={() => setCartOpened(true)} />
+
+      {/* <Routes path="/" exact> Test</Routes> */}
+
       <div className="content">
         <div className="header-content">
           <h1>Wszystkie adidasy</h1>
@@ -68,7 +78,7 @@ function App() {
                 title={item.title}
                 price={item.price}
                 image={item.image}
-                onClickLike={() => console.log("Like")}
+                onClickLike={(obj) => onAddToFavorite(obj)}
                 onClickPlus={(obj) => onAddToCart(obj)}
               />
             ))}

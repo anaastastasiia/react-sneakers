@@ -4,16 +4,22 @@ import { useState } from "react";
 
 function ProductItem({ image, title, price, onClickLike, onClickPlus }) {
   const [isAdded, setIsAdded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const onPlus = () => {
     onClickPlus({ image, title, price });
     setIsAdded(!isAdded);
   };
 
+  const onClickFavorite = ()=> {
+    onClickLike({ image, title, price });
+    setIsFavorite(!isFavorite);
+  }
+
   return (
     <div className={styles.card}>
-      <div className={styles.like} onClick={onClickLike}>
-        <img src="img/unliked.svg" alt="Unliked" />
+      <div className={styles.like} onClick={onClickFavorite}>
+        <img src={isFavorite ? 'img/liked.svg' : 'img/unliked.svg'} alt="Unliked" />
       </div>
       <img width={133} height={112} src={image} alt="Sneakers" />
       <h5>{title}</h5>
