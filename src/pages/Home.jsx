@@ -1,4 +1,6 @@
-function Home() {
+import DrawerCart from "../components/ProductItem/ProductItem";
+
+function Home({ sneakersArray, seacrhValue, ProductItem, onAddToFavorite, onAddToCart, onChangeSearchInput }) {
     return (
         <div className="content">
             <div className="header-content">
@@ -17,8 +19,9 @@ function Home() {
                     .filter((item) =>
                         item.title.toLowerCase().includes(seacrhValue.toLowerCase())
                     )
-                    .map((item) => (
+                    .map((item, index) => (
                         <ProductItem
+                            key={index}
                             title={item.title}
                             price={item.price}
                             image={item.image}
@@ -30,3 +33,5 @@ function Home() {
         </div>
     )
 }
+
+export default Home

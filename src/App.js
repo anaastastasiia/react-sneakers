@@ -1,12 +1,16 @@
-import ProductItem from "./components/ProductItem/ProductItem";
-import {Routes} from "react-router-dom"
-import Header from "./components/Header";
-import DrawerCart from "./components/DrawerCart";
+import {Routes, Route} from "react-router-dom"
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+import ProductItem from "./components/ProductItem/ProductItem";
+import Header from "./components/Header";
+import DrawerCart from "./components/DrawerCart"
+
+import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
+
 function App() {
-  const [sneakersArray, setSneakersArray] = useState([]);
+  const [sneakersArray , setSneakersArray] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [seacrhValue, setSeacrhValue] = useState("");
@@ -22,6 +26,11 @@ function App() {
       .get("https://618be293ded7fb0017bb92a9.mockapi.io/cart")
       .then((res) => {
         setCartItems(res.data);
+      });
+      axios
+      .get("https://618be293ded7fb0017bb92a9.mockapi.io/favorites")
+      .then((res) => {
+        setFavorites(res.data);
       });
   }, []);
 
@@ -54,36 +63,15 @@ function App() {
       )}
       <Header onClickCart={() => setCartOpened(true)} />
 
-      {/* <Routes path="/" exact> Test</Routes> */}
+      <Routes path="/" exact> 
+       <Route path="/" exact element={
+       <Home sneakersArray={sneakersArray} seacrhValue={seacrhValue}  ProductItem={ProductItem} onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart} onChangeSearchInput={onChangeSearchInput}/>}/>  
+       <Route path="/favorites" exact element={
+         <Favorites sneakersArray={favorites}/>
+       }/>
+      </Routes>
 
-      <div className="content">
-        <div className="header-content">
-          <h1>Wszystkie adidasy</h1>
-          <div className="search-block">
-            <img src="/img/search.svg" alt="Search" />
-            <input
-              onChange={onChangeSearchInput}
-              type="text"
-              placeholder="Szukaj..."
-            />
-          </div>
-        </div>
-        <div className="card-item">
-          {sneakersArray
-            .filter((item) =>
-              item.title.toLowerCase().includes(seacrhValue.toLowerCase())
-            )
-            .map((item) => (
-              <ProductItem
-                title={item.title}
-                price={item.price}
-                image={item.image}
-                onClickLike={(obj) => onAddToFavorite(obj)}
-                onClickPlus={(obj) => onAddToCart(obj)}
-              />
-            ))}
-        </div>
-      </div>
+      
     </div>
   );
 }
