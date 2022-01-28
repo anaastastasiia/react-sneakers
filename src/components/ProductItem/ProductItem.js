@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./ProductItem.module.scss";
 import { useState } from "react";
 
-function ProductItem({ image, title, price, onClickLike, onClickPlus, favorite }) {
+function ProductItem({id, image, title, price, onClickLike, onClickPlus, favorite = false }) {
   const [isAdded, setIsAdded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(favorite);
 
@@ -12,7 +12,7 @@ function ProductItem({ image, title, price, onClickLike, onClickPlus, favorite }
   };
 
   const onClickFavorite = ()=> {
-    onClickLike({ image, title, price });
+    onClickLike({id, image, title, price });
     setIsFavorite(!isFavorite);
   }
 

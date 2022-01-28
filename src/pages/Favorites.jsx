@@ -1,6 +1,6 @@
 import ProductItem from "../components/ProductItem/ProductItem"
 
-function Favorites({ sneakersArray }) {
+function Favorites({ sneakersArray, onAddToFavorite }) {
     return (
         <div className="content">
             <div className="header-content">
@@ -11,9 +11,9 @@ function Favorites({ sneakersArray }) {
                     .map((item, index) => (
                         <ProductItem
                             key={index}
-                            title={item.title}
-                            price={item.price}
-                            image={item.image} favorite={true}
+                            favorite={true}
+                            onClickLike={onAddToFavorite}
+                            {...item}
                         />
                     ))}
             </div>

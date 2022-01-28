@@ -22,11 +22,9 @@ function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChan
                     .map((item, index) => (
                         <ProductItem
                             key={index}
-                            title={item.title}
-                            price={item.price}
-                            image={item.image}
                             onClickLike={(obj) => onAddToFavorite(obj)}
                             onClickPlus={(obj) => onAddToCart(obj)}
+                            {...item}
                         />
                     ))}
             </div>

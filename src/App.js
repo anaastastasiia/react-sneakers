@@ -44,9 +44,14 @@ function App() {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const onAddToFavorite = (obj) => {
-    axios.post("https://618be293ded7fb0017bb92a9.mockapi.io/favorites", obj);
-    setFavorites((prev) => [...prev, obj]);
+  const onAddToFavorite = async(obj) => {
+    if(favorites.find(favObj => favObj.id === obj.id)) {
+      axios.delete(`https://618be293ded7fb0017bb92a9.mockapi.io/favorites/${obj.id}`);
+      setFavorites((prev) => prev.filter((item) => item.id !== obj.id));
+    } else {
+      const {data} = await axios.post(`https://618be293ded7fb0017bb92a9.mockapi.io/favorites`, obj);
+      setFavorites((prev) => [...prev, data]);
+    }
   };
 
   const onChangeSearchInput = (event) => {
@@ -67,7 +72,7 @@ function App() {
        <Route path="/" exact element={
        <Home sneakersArray={sneakersArray} seacrhValue={seacrhValue} onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart} onChangeSearchInput={onChangeSearchInput}/>}/>  
        <Route path="/favorites" exact element={
-         <Favorites sneakersArray={favorites}/>
+         <Favorites sneakersArray={favorites} onAddToFavorite={onAddToFavorite}/>
        }/>
       </Routes>
 
