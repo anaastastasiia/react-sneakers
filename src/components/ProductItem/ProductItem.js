@@ -2,9 +2,9 @@ import React from "react";
 import styles from "./ProductItem.module.scss";
 import { useState } from "react";
 
-function ProductItem({ image, title, price, onClickLike, onClickPlus }) {
+function ProductItem({ image, title, price, onClickLike, onClickPlus, favorite }) {
   const [isAdded, setIsAdded] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(favorite);
 
   const onPlus = () => {
     onClickPlus({ image, title, price });

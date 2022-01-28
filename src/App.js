@@ -65,7 +65,7 @@ function App() {
 
       <Routes path="/" exact> 
        <Route path="/" exact element={
-       <Home sneakersArray={sneakersArray} seacrhValue={seacrhValue}  ProductItem={ProductItem} onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart} onChangeSearchInput={onChangeSearchInput}/>}/>  
+       <Home sneakersArray={sneakersArray} seacrhValue={seacrhValue} onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart} onChangeSearchInput={onChangeSearchInput}/>}/>  
        <Route path="/favorites" exact element={
          <Favorites sneakersArray={favorites}/>
        }/>

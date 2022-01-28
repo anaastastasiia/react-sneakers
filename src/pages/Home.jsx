@@ -1,6 +1,6 @@
-import DrawerCart from "../components/ProductItem/ProductItem";
+import ProductItem from "../components/ProductItem/ProductItem"
 
-function Home({ sneakersArray, seacrhValue, ProductItem, onAddToFavorite, onAddToCart, onChangeSearchInput }) {
+function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput }) {
     return (
         <div className="content">
             <div className="header-content">

@@ -1,4 +1,6 @@
-function Favorites({ sneakersArray, ProductItem }) {
+import ProductItem from "../components/ProductItem/ProductItem"
+
+function Favorites({ sneakersArray }) {
     return (
         <div className="content">
             <div className="header-content">
@@ -11,8 +13,7 @@ function Favorites({ sneakersArray, ProductItem }) {
                             key={index}
                             title={item.title}
                             price={item.price}
-                            image={item.image}
-
+                            image={item.image} favorite={true}
                         />
                     ))}
             </div>
