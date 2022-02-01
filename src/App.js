@@ -1,3 +1,4 @@
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -8,6 +9,8 @@ import DrawerCart from "./components/DrawerCart";
 
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
+
+const AppContext = React.createContext({});
 
 function App() {
   const [sneakersArray, setSneakersArray] = useState([]);
@@ -80,44 +83,46 @@ function App() {
     setSeacrhValue(event.target.value);
   };
   return (
-    <div className="wrapper ">
-      {cartOpened && (
-        <DrawerCart
-          sneakersArray={cartItems}
-          onCloseCart={() => setCartOpened(false)}
-          onRemove={onRemoveItem}
-        />
-      )}
-      <Header onClickCart={() => setCartOpened(true)} />
+    <AppContext.Provider>
+      <div className="wrapper ">
+        {cartOpened && (
+          <DrawerCart
+            sneakersArray={cartItems}
+            onCloseCart={() => setCartOpened(false)}
+            onRemove={onRemoveItem}
+          />
+        )}
+        <Header onClickCart={() => setCartOpened(true)} />
 
-      <Routes path="/" exact>
-        <Route
-          path="/"
-          exact
-          element={
-            <Home
-              sneakersArray={sneakersArray}
-              cartItems={cartItems}
-              seacrhValue={seacrhValue}
-              onAddToFavorite={onAddToFavorite}
-              onAddToCart={onAddToCart}
-              onChangeSearchInput={onChangeSearchInput}
-              isLoading={isLoading}
-            />
-          }
-        />
-        <Route
-          path="/favorites"
-          exact
-          element={
-            <Favorites
-              sneakersArray={favorites}
-              onAddToFavorite={onAddToFavorite}
-            />
-          }
-        />
-      </Routes>
-    </div>
+        <Routes path="/" exact>
+          <Route
+            path="/"
+            exact
+            element={
+              <Home
+                sneakersArray={sneakersArray}
+                cartItems={cartItems}
+                seacrhValue={seacrhValue}
+                onAddToFavorite={onAddToFavorite}
+                onAddToCart={onAddToCart}
+                onChangeSearchInput={onChangeSearchInput}
+                isLoading={isLoading}
+              />
+            }
+          />
+          <Route
+            path="/favorites"
+            exact
+            element={
+              <Favorites
+                sneakersArray={favorites}
+                onAddToFavorite={onAddToFavorite}
+              />
+            }
+          />
+        </Routes>
+      </div>
+    </AppContext.Provider>
   );
 }
 
