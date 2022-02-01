@@ -1,13 +1,18 @@
+import React from 'react'
 import ProductItem from "../components/ProductItem/ProductItem"
+import AppContext from '../context';
 
-function Favorites({ sneakersArray, onAddToFavorite }) {
+function Favorites({ onAddToFavorite }) {
+
+    const {favorites} = React.useContext(AppContext);
+
     return (
         <div className="content">
             <div className="header-content">
                 <h1>Favorites</h1>
             </div>
             <div className="card-item">
-                {sneakersArray
+                {favorites
                     .map((item, index) => (
                         <ProductItem
                             key={index}

@@ -6,11 +6,10 @@ import axios from "axios";
 // import ProductItem from "./components/ProductItem/ProductItem";
 import Header from "./components/Header";
 import DrawerCart from "./components/DrawerCart";
+import AppContext from "./context";
 
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
-
-const AppContext = React.createContext({});
 
 function App() {
   const [sneakersArray, setSneakersArray] = useState([]);
@@ -83,7 +82,7 @@ function App() {
     setSeacrhValue(event.target.value);
   };
   return (
-    <AppContext.Provider>
+    <AppContext.Provider value={{ sneakersArray, cartItems, favorites }}>
       <div className="wrapper ">
         {cartOpened && (
           <DrawerCart
