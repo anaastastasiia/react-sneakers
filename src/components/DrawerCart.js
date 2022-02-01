@@ -18,7 +18,7 @@ function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
           <div className="drawer-content">
             <div className="drawer-items clear">
               {sneakersArray.map((obj) => (
-                <div className="cart-item">
+                <div key={obj.id} className="cart-item">
                   <div>
                     <img
                       className="cart-item-img"

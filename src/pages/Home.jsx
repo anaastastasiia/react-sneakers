@@ -1,6 +1,6 @@
 import ProductItem from "../components/ProductItem/ProductItem"
 
-function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput }) {
+function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput,cartItems }) {
     return (
         <div className="content">
             <div className="header-content">
@@ -24,6 +24,7 @@ function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChan
                             key={index}
                             onClickLike={(obj) => onAddToFavorite(obj)}
                             onClickPlus={(obj) => onAddToCart(obj)}
+                            added={cartItems.some(obj => Number(obj.id) === Number(item.id))}
                             {...item}
                         />
                     ))}
