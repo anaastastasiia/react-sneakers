@@ -1,18 +1,17 @@
 import ProductItem from "../components/ProductItem/ProductItem"
 
-function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput,cartItems }) {
+function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput,cartItems,isLoading }) {
     const renderItems = () => {
-        return sneakersArray
-        .filter((item) =>
-            item.title.toLowerCase().includes(seacrhValue.toLowerCase())
-        )
-        .map((item, index) => (
+        const filteredItems = sneakersArray.filter((item) =>
+        item.title.toLowerCase().includes(seacrhValue.toLowerCase())
+    )
+        return (isLoading ? [...Array(10)] : filteredItems).map((item, index) => (
             <ProductItem
                 key={index}
                 onClickLike={(obj) => onAddToFavorite(obj)}
                 onClickPlus={(obj) => onAddToCart(obj)}
                 added={cartItems.some(obj => Number(obj.id) === Number(item.id))}
-                loading = {false}
+                loading = {isLoading}
                 {...item}
             />
         ))
