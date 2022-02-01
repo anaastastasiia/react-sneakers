@@ -1,6 +1,23 @@
 import ProductItem from "../components/ProductItem/ProductItem"
 
 function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput,cartItems }) {
+    const renderItems = () => {
+        return sneakersArray
+        .filter((item) =>
+            item.title.toLowerCase().includes(seacrhValue.toLowerCase())
+        )
+        .map((item, index) => (
+            <ProductItem
+                key={index}
+                onClickLike={(obj) => onAddToFavorite(obj)}
+                onClickPlus={(obj) => onAddToCart(obj)}
+                added={cartItems.some(obj => Number(obj.id) === Number(item.id))}
+                loading = {false}
+                {...item}
+            />
+        ))
+    }
+
     return (
         <div className="content">
             <div className="header-content">
@@ -15,19 +32,7 @@ function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChan
                 </div>
             </div>
             <div className="card-item">
-                {sneakersArray
-                    .filter((item) =>
-                        item.title.toLowerCase().includes(seacrhValue.toLowerCase())
-                    )
-                    .map((item, index) => (
-                        <ProductItem
-                            key={index}
-                            onClickLike={(obj) => onAddToFavorite(obj)}
-                            onClickPlus={(obj) => onAddToCart(obj)}
-                            added={cartItems.some(obj => Number(obj.id) === Number(item.id))}
-                            {...item}
-                        />
-                    ))}
+                {renderItems()}
             </div>
         </div>
     )
