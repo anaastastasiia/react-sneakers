@@ -1,9 +1,7 @@
 import React from 'react'
 import ProductItem from "../components/ProductItem/ProductItem"
 
-function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput,cartItems,isLoading }) {
-    
-
+function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput,isLoading }) {
     const renderItems = () => {
         const filteredItems = sneakersArray.filter((item) =>
         item.title.toLowerCase().includes(seacrhValue.toLowerCase())

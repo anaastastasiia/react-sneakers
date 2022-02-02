@@ -62,7 +62,7 @@ function ProductItem({
             <img
               className={styles.button}
               onClick={onPlus}
-              src={isAdded ? "/img/added-btn.svg" : "/img/add-btn.svg"}
+              src={isItemAdded(id) ? "/img/added-btn.svg" : "/img/add-btn.svg"}
               alt="Plus"
             />
           </div>
