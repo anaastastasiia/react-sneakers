@@ -96,6 +96,8 @@ function App() {
         favorites,
         isItemAdded,
         onAddToFavorite,
+        setCartOpened,
+        setCartItems,
       }}
     >
       <div className="wrapper ">

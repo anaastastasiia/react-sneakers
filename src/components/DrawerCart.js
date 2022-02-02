@@ -1,6 +1,16 @@
 import React from "react";
+import Info from "../components/ProductItem/Info";
+import AppContext from "../context";
 
 function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
+  const { setCartItems } = React.useContext(AppContext);
+  const [isOrderComplete, setIsOrderComplete] = React.useState(false);
+
+  const onClickOrder = () => {
+    setIsOrderComplete(true);
+    setCartItems([]);
+  };
+
   return (
     <div className="drawer-overlay">
       <div className="drawer">
@@ -52,7 +62,7 @@ function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
                   <b>0 zł.</b>
                 </li>
                 <li>
-                  <button className="green-button">
+                  <button onCLick={onClickOrder} className="green-button">
                     Złożyć zamówienie <img src="/img/arrow.svg" alt="Arrow" />
                   </button>
                 </li>
@@ -60,15 +70,21 @@ function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
             </div>
           </div>
         ) : (
-          <div className="cartEmpty">
-            <img src="/img/empty-cart.png" alt="CartEmpty" />
-            <h2>Koszyk jest pusty</h2>
-            <p>Dodaj cokolwiek do zamówienia ;)</p>
-            <button onClick={onCloseCart} className="green-button">
-              <img src="/img/arrow.svg" alt="Arrow" />
-              Wróc
-            </button>
-          </div>
+          <Info
+            image={
+              isOrderComplete ? "/img/completeCart.png" : "/img/empty-cart.png"
+            }
+            title={
+              isOrderComplete
+                ? "Zamowinie zostało złożone"
+                : "Koszyk jest pusty"
+            }
+            description={
+              isOrderComplete
+                ? "Twoje zamówienie #56 zostanie wkrótce dostarczone kurierem"
+                : "Dodaj cokolwiek do zamówienia ;)"
+            }
+          />
         )}
       </div>
     </div>
