@@ -2,6 +2,7 @@ import React from "react";
 import ContentLoader from "react-content-loader";
 import styles from "./ProductItem.module.scss";
 import { useState } from "react";
+import AppContext from "../../context";
 
 function ProductItem({
   id,
@@ -14,12 +15,11 @@ function ProductItem({
   added = false,
   loading = false,
 }) {
-  const [isAdded, setIsAdded] = useState(added);
+  const { isItemAdded } = React.useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(favorite);
 
   const onPlus = () => {
     onClickPlus({ id, image, title, price });
-    setIsAdded(!isAdded);
   };
 
   const onClickFavorite = () => {

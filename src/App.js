@@ -81,8 +81,15 @@ function App() {
   const onChangeSearchInput = (event) => {
     setSeacrhValue(event.target.value);
   };
+
+  const isItemAdded = (id) => {
+    return cartItems.some((obj) => Number(obj.id) === Number(id));
+  };
+
   return (
-    <AppContext.Provider value={{ sneakersArray, cartItems, favorites }}>
+    <AppContext.Provider
+      value={{ sneakersArray, cartItems, favorites, isItemAdded }}
+    >
       <div className="wrapper ">
         {cartOpened && (
           <DrawerCart

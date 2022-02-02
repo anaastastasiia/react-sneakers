@@ -1,6 +1,9 @@
+import React from 'react'
 import ProductItem from "../components/ProductItem/ProductItem"
 
 function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput,cartItems,isLoading }) {
+    
+
     const renderItems = () => {
         const filteredItems = sneakersArray.filter((item) =>
         item.title.toLowerCase().includes(seacrhValue.toLowerCase())
@@ -10,7 +13,6 @@ function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChan
                 key={index}
                 onClickLike={(obj) => onAddToFavorite(obj)}
                 onClickPlus={(obj) => onAddToCart(obj)}
-                added={cartItems.some(obj => Number(obj.id) === Number(item.id))}
                 loading = {isLoading}
                 {...item}
             />
