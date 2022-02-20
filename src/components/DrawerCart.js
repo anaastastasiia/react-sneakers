@@ -1,14 +1,41 @@
 import React from "react";
+import axios from "axios";
 import Info from "../components/ProductItem/Info";
 import AppContext from "../context";
 
-function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
-  const { setCartItems } = React.useContext(AppContext);
-  const [isOrderComplete, setIsOrderComplete] = React.useState(false);
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  const onClickOrder = () => {
-    setIsOrderComplete(true);
-    setCartItems([]);
+function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
+  const { cartItems, setCartItems } = React.useContext(AppContext);
+  const { orderId, setOrderId } = React.useState(null);
+  const [isOrderComplete, setIsOrderComplete] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const onClickOrder = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.post(
+        "https://618be293ded7fb0017bb92a9.mockapi.io/orders",
+        {
+          sneakersArray: cartItems,
+        }
+      );
+
+      setOrderId(data.id);
+      setIsOrderComplete(true);
+      setCartItems([]);
+
+      for (let i = 0; i < cartItems.length; i++) {
+        const item = cartItems[i];
+        await axios.delete(
+          "https://618be293ded7fb0017bb92a9.mockapi.io/cart/" + item.id
+        );
+        await delay(1000);
+      }
+    } catch (error) {
+      alert("Nie udało się utworzyć zamówienia :(");
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -61,12 +88,14 @@ function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
                   <div></div>
                   <b>0 zł.</b>
                 </li>
-                <li>
-                  <button onCLick={onClickOrder} className="green-button">
-                    Złożyć zamówienie <img src="/img/arrow.svg" alt="Arrow" />
-                  </button>
-                </li>
               </ul>
+              <button
+                disabled={isLoading}
+                onClick={onClickOrder}
+                className="green-button"
+              >
+                Złożyć zamówienie <img src="img/arrow.svg" alt="Arrow" />
+              </button>
             </div>
           </div>
         ) : (
@@ -81,8 +110,8 @@ function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
             }
             description={
               isOrderComplete
-                ? "Twoje zamówienie #56 zostanie wkrótce dostarczone kurierem"
-                : "Dodaj cokolwiek do zamówienia ;)"
+                ? `Twoje zamówienie #${orderId} zostanie wkrótce dostarczone kurierem`
+                : `Dodaj cokolwiek do zamówienia ;)`
             }
           />
         )}

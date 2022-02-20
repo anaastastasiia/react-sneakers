@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-// import ProductItem from "./components/ProductItem/ProductItem";
 import Header from "./components/Header";
 import DrawerCart from "./components/DrawerCart";
 import AppContext from "./context";
