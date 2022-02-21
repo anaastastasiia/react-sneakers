@@ -1,12 +1,12 @@
 import React from "react";
 import axios from "axios";
 import Info from "../components/ProductItem/Info";
-import AppContext from "../context";
+import { useCart } from "../hooks/useCart";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
-  const { cartItems, setCartItems } = React.useContext(AppContext);
+  const { cartItems, setCartItems, totalPrice } = useCart();
   const { orderId, setOrderId } = React.useState(null);
   const [isOrderComplete, setIsOrderComplete] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -81,12 +81,12 @@ function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
                 <li>
                   <span>Razem:</span>
                   <div></div>
-                  <b>0 zł.</b>
+                  <b>{totalPrice} zł.</b>
                 </li>
                 <li>
                   <span>Podatek 5%:</span>
                   <div></div>
-                  <b>0 zł.</b>
+                  <b>{(totalPrice / 100) * 5} zł.</b>
                 </li>
               </ul>
               <button
