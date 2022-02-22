@@ -11,8 +11,14 @@ function Orders() {
 
     React.useEffect(()=>{
         (async () => {
-            const { data } = await axios.get('https://618be293ded7fb0017bb92a9.mockapi.io/orders');
-           setOrders(data.reduce((prev,obj)=>[...prev,...obj.ProductItem],[]))
+            try {
+                const { data } = await axios.get('https://618be293ded7fb0017bb92a9.mockapi.io/orders');
+                setOrders(data.reduce((prev, obj) => [...prev, ...obj.ProductItem], []));
+                setIsLoading(false);
+              } catch (error) {
+                alert('Błąd w żądaniu zamówień');
+                console.error(error);
+              }
         })();
     },[]);
     return (
@@ -21,11 +27,9 @@ function Orders() {
                 <h1>Moje zamówienia</h1>
             </div>
             <div className="card-item">
-                {orders.map((item, index) => (
+                {(isLoading ? [...Array(10)] : orders).map((item, index) => (
                         <ProductItem
                         key={index}
-                        onClickLike={(obj) => onAddToFavorite(obj)}
-                        onClickPlus={(obj) => onAddToCart(obj)}
                         loading = {isLoading}
                         {...item}
                         />

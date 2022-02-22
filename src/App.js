@@ -21,42 +21,66 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const cartResponse = await axios.get(
-        "https://618be293ded7fb0017bb92a9.mockapi.io/cart"
-      );
-      const favoritesResponse = await axios.get(
-        "https://618be293ded7fb0017bb92a9.mockapi.io/favorites"
-      );
-      const itemsResponse = await axios.get(
-        "https://618be293ded7fb0017bb92a9.mockapi.io/items"
-      );
+      try {
+        const [cartResponse, favoritesResponse, itemsResponse] =
+          await Promise.all([
+            axios.get("https://618be293ded7fb0017bb92a9.mockapi.io/cart"),
+            axios.get("https://618be293ded7fb0017bb92a9.mockapi.io/favorites"),
+            axios.get("https://618be293ded7fb0017bb92a9.mockapi.io/items"),
+          ]);
+        // const cartResponse = await axios.get(
+        //   "https://618be293ded7fb0017bb92a9.mockapi.io/cart"
+        // );
+        // const favoritesResponse = await axios.get(
+        //   "https://618be293ded7fb0017bb92a9.mockapi.io/favorites"
+        // );
+        // const itemsResponse = await axios.get(
+        //   "https://618be293ded7fb0017bb92a9.mockapi.io/items"
+        // );
 
-      setIsLoading(false);
+        setIsLoading(false);
 
-      setCartItems(cartResponse.data);
-      setFavorites(favoritesResponse.data);
-      setSneakersArray(itemsResponse.data);
+        setCartItems(cartResponse.data);
+        setFavorites(favoritesResponse.data);
+        setSneakersArray(itemsResponse.data);
+      } catch (error) {
+        alert("Błąd żądania danych :(");
+        console.error(error);
+      }
     }
     fetchData();
   }, []);
 
-  const onAddToCart = (obj) => {
-    if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
-      axios.delete(
-        "https://618be293ded7fb0017bb92a9.mockapi.io/cart/${obj.id}"
-      );
-      setCartItems((prev) =>
-        prev.filter((item) => Number(item.id) !== Number(obj.id))
-      ); //tu już jest inny item
-    } else {
-      axios.post("https://618be293ded7fb0017bb92a9.mockapi.io/cart", obj);
-      setCartItems((prev) => [...prev, obj]);
+  const onAddToCart = async (obj) => {
+    try {
+      if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
+        await axios.delete(
+          "https://618be293ded7fb0017bb92a9.mockapi.io/cart/${obj.id}"
+        );
+        setCartItems((prev) =>
+          prev.filter((item) => Number(item.id) !== Number(obj.id))
+        ); //tu już jest inny item
+      } else {
+        await axios.post(
+          "https://618be293ded7fb0017bb92a9.mockapi.io/cart",
+          obj
+        );
+        setCartItems((prev) => [...prev, obj]);
+      }
+    } catch (error) {
+      alert("Błąd podczas dodawania towaru do koszyka");
+      console.error(error);
     }
   };
 
   const onRemoveItem = (id) => {
-    axios.delete(`https://618be293ded7fb0017bb92a9.mockapi.io/cart/${id}`);
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    try {
+      axios.delete(`https://618be293ded7fb0017bb92a9.mockapi.io/cart/${id}`);
+      setCartItems((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      alert("Błąd podczas usuwania towaru z koszyka");
+      console.error(error);
+    }
   };
 
   const onAddToFavorite = async (obj) => {
@@ -77,6 +101,7 @@ function App() {
       }
     } catch (error) {
       alert("Nie udało się dodać do ulubionych");
+      console.error(error);
     }
   };
 

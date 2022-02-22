@@ -46,12 +46,14 @@ function ProductItem({
         </ContentLoader>
       ) : (
         <>
-          <div className={styles.like} onClick={onClickFavorite}>
-            <img
-              src={isFavorite ? "img/liked.svg" : "img/unliked.svg"}
-              alt="Unliked"
-            />
-          </div>
+          {onClickLike && (
+            <div className={styles.like} onClick={onClickFavorite}>
+              <img
+                src={isFavorite ? "img/liked.svg" : "img/unliked.svg"}
+                alt="Unliked"
+              />
+            </div>
+          )}
           <img width={133} height={112} src={image} alt="Sneakers" />
           <h5>{title}</h5>
           <div className={styles.costBlock}>
@@ -59,12 +61,16 @@ function ProductItem({
               <span>Cena:</span>
               <b>{price} zł.</b>
             </div>
-            <img
-              className={styles.button}
-              onClick={onPlus}
-              src={isItemAdded(id) ? "/img/added-btn.svg" : "/img/add-btn.svg"}
-              alt="Plus"
-            />
+            {onClickPlus && (
+              <img
+                className={styles.button}
+                onClick={onPlus}
+                src={
+                  isItemAdded(id) ? "/img/added-btn.svg" : "/img/add-btn.svg"
+                }
+                alt="Plus"
+              />
+            )}
           </div>
         </>
       )}
