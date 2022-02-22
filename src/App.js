@@ -82,7 +82,7 @@ function App() {
       //   setCartItems((prev) => [...prev, data]);
       // }
     } catch (error) {
-      alert("Błąd podczas dodawania towaru do koszyka");
+      // alert("Błąd podczas dodawania towaru do koszyka");
       console.error(error);
     }
   };
