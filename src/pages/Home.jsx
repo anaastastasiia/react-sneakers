@@ -22,7 +22,7 @@ function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChan
             <div className="header-content">
                 <h1>Wszystkie adidasy</h1>
                 <div className="search-block">
-                    <img src="/img/search.svg" alt="Search" />
+                    <img src="img/search.svg" alt="Search" />
                     <input
                         onChange={onChangeSearchInput}
                         type="text"

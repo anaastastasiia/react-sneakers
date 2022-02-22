@@ -12,7 +12,6 @@ function ProductItem({
   onClickLike,
   onClickPlus,
   favorite = false,
-  added = false,
   loading = false,
 }) {
   const { isItemAdded } = React.useContext(AppContext);
@@ -65,9 +64,7 @@ function ProductItem({
               <img
                 className={styles.button}
                 onClick={onPlus}
-                src={
-                  isItemAdded(id) ? "/img/added-btn.svg" : "/img/add-btn.svg"
-                }
+                src={isItemAdded(id) ? "img/added-btn.svg" : "img/add-btn.svg"}
                 alt="Plus"
               />
             )}

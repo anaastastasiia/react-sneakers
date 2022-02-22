@@ -102,7 +102,7 @@ function DrawerCart({ onCloseCart, onRemove, sneakersArray = [], opened }) {
         ) : (
           <Info
             image={
-              isOrderComplete ? "/img/completeCart.png" : "/img/empty-cart.png"
+              isOrderComplete ? "img/completeCart.png" : "img/empty-cart.png"
             }
             title={
               isOrderComplete
