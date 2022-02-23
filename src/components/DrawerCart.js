@@ -6,7 +6,7 @@ import { useCart } from "../hooks/useCart";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function DrawerCart({ onCloseCart, onRemove, sneakersArray = [], opened }) {
+function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
   const { cartItems, setCartItems, totalPrice } = useCart();
   const { orderId, setOrderId } = React.useState(null);
   const [isOrderComplete, setIsOrderComplete] = React.useState(false);

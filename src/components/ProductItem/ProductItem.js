@@ -19,7 +19,7 @@ function ProductItem({
   const [isFavorite, setIsFavorite] = useState(favorite);
 
   const onPlus = () => {
-    onClickPlus({ id, image, title, price });
+    onClickPlus({ id, parentId: id, image, title, price });
   };
 
   const onClickFavorite = () => {
