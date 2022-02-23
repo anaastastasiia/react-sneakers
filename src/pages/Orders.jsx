@@ -10,7 +10,7 @@ function Orders() {
         (async () => {
             try {
                 const { data } = await axios.get('https://618be293ded7fb0017bb92a9.mockapi.io/orders');
-                setOrders(data.reduce((prev, obj) => [...prev, ...obj.ProductItem], []));
+                setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
                 setIsLoading(false);
               } catch (error) {
                 alert('Błąd w żądaniu zamówień');
