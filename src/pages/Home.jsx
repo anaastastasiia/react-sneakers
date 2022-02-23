@@ -1,9 +1,9 @@
 import React from 'react'
 import ProductItem from "../components/ProductItem/ProductItem"
 
-function Home({ sneakersArray, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput,isLoading }) {
+function Home({ items, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput,isLoading }) {
     const renderItems = () => {
-        const filteredItems = sneakersArray.filter((item) =>
+        const filteredItems = items.filter((item) =>
         item.title.toLowerCase().includes(seacrhValue.toLowerCase())
     )
         return (isLoading ? [...Array(10)] : filteredItems).map((item, index) => (

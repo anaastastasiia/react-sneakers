@@ -6,9 +6,9 @@ import { useCart } from "../hooks/useCart";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
+function DrawerCart({ onClose, onRemove, items = [] }) {
   const { cartItems, setCartItems, totalPrice } = useCart();
-  const { orderId, setOrderId } = React.useState(null);
+  const [orderId, setOrderId] = React.useState(null);
   const [isOrderComplete, setIsOrderComplete] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -18,7 +18,7 @@ function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
       const { data } = await axios.post(
         "https://618be293ded7fb0017bb92a9.mockapi.io/orders",
         {
-          sneakersArray: cartItems,
+          items: cartItems,
         }
       );
 
@@ -45,17 +45,17 @@ function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
         <h2>
           Koszyk{" "}
           <img
-            onClick={onCloseCart}
+            onClick={onClose}
             className="remove-btn"
             src="img/remove-active.svg"
             alt="Close"
           />
         </h2>
 
-        {sneakersArray.length > 0 ? (
+        {items.length > 0 ? (
           <div className="drawer-content">
             <div className="drawer-items clear">
-              {sneakersArray.map((obj) => (
+              {items.map((obj) => (
                 <div key={obj.id} className="cart-item">
                   <div>
                     <img
@@ -101,9 +101,6 @@ function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
           </div>
         ) : (
           <Info
-            image={
-              isOrderComplete ? "/img/completeCart.png" : "/img/empty-cart.png"
-            }
             title={
               isOrderComplete
                 ? "Zamowinie zostało złożone"
@@ -113,6 +110,9 @@ function DrawerCart({ onCloseCart, onRemove, sneakersArray = [] }) {
               isOrderComplete
                 ? `Twoje zamówienie #${orderId} zostanie wkrótce dostarczone kurierem`
                 : `Dodaj cokolwiek do zamówienia ;)`
+            }
+            image={
+              isOrderComplete ? "/img/completeCart.png" : "/img/empty-cart.png"
             }
           />
         )}

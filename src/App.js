@@ -12,7 +12,7 @@ import Favorites from "./pages/Favorites";
 import Orders from "./pages/Orders";
 
 function App() {
-  const [sneakersArray, setSneakersArray] = useState([]);
+  const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [seacrhValue, setSeacrhValue] = useState("");
@@ -33,7 +33,7 @@ function App() {
 
         setCartItems(cartResponse.data);
         setFavorites(favoritesResponse.data);
-        setSneakersArray(itemsResponse.data);
+        setItems(itemsResponse.data);
       } catch (error) {
         alert("Błąd żądania danych :(");
         console.error(error);
@@ -123,7 +123,7 @@ function App() {
   return (
     <AppContext.Provider
       value={{
-        sneakersArray,
+        items,
         cartItems,
         favorites,
         isItemAdded,
@@ -136,8 +136,8 @@ function App() {
       <div className="wrapper ">
         {cartOpened && (
           <DrawerCart
-            sneakersArray={cartItems}
-            onCloseCart={() => setCartOpened(false)}
+            items={cartItems}
+            onClose={() => setCartOpened(false)}
             onRemove={onRemoveItem}
           />
         )}
@@ -149,7 +149,7 @@ function App() {
             exact
             element={
               <Home
-                sneakersArray={sneakersArray}
+                items={items}
                 cartItems={cartItems}
                 seacrhValue={seacrhValue}
                 onAddToFavorite={onAddToFavorite}
