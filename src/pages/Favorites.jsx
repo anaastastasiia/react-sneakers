@@ -3,8 +3,7 @@ import ProductItem from "../components/ProductItem/ProductItem"
 import AppContext from '../context';
 
 function Favorites() {
-
-    const {favorites, onAddToFavorite={onAddToFavorite}} = React.useContext(AppContext);
+    const {favorites, onAddToFavorite} = React.useContext(AppContext);
 
     return (
         <div className="content">
