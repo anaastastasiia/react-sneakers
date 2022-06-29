@@ -1,25 +1,35 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useCart } from "../hooks/useCart";
 
-function Header() {
+function Header(props) {
+  const { totalPrice } = useCart();
+
   return (
     <header className="header">
-      <div className="logo-block">
-        <img width={40} height={40} src="/img/logo.png" />
-        <div>
-          <h3>Sneakers</h3>
-          <p>Sklep najlepszych adidasów</p>
+      <Link to="/">
+        <div className="logo-block">
+          <img width={40} height={40} src="/img/logo.png" alt="Logo" />
+          <div>
+            <h3>Sneakers</h3>
+            <p>Sklep najlepszych adidasów</p>
+          </div>
         </div>
-      </div>
+      </Link>
       <ul className="user-block">
-        <li className="user-item">
-          <img width={18} height={18} src="/img/cart.svg" />
-          <span>1305 zł.</span>
+        <li onClick={props.onClickCart} className="user-item">
+          <img width={18} height={18} src="/img/cart.svg" alt="Cart" />
+          <span>{totalPrice} zł.</span>
         </li>
         <li className="user-item">
-          <img width={18} height={18} src="/img/favorite.svg" />
+          <Link to="/favorites">
+            <img width={18} height={18} src="/img/favorite.svg" alt="Like" />
+          </Link>
         </li>
         <li className="user-item">
-          <img width={18} height={18} src="/img/user.svg" />
+          <Link to="/orders">
+            <img width={18} height={18} src="/img/user.svg" alt="User" />
+          </Link>
         </li>
       </ul>
     </header>
