@@ -10,6 +10,9 @@ import AppContext from "./context";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 import Orders from "./pages/Orders";
+import AllProducts from "./pages/AllProducts";
+
+import LoginForm from "./components/LoginForm";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -18,6 +21,32 @@ function App() {
   const [seacrhValue, setSeacrhValue] = useState("");
   const [cartOpened, setCartOpened] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const admin = {
+    email: "admin@gmail.com",
+    password: "admin1234",
+  };
+
+  const [user, setUser] = useState({ name: "", email: "" });
+
+  const Login = (details) => {
+    console.log(details);
+
+    if (details.email == admin.email && details.password == admin.password) {
+      console.log("Logged in");
+      setUser({
+        name: details.name,
+        email: details.email,
+      });
+    } else {
+      alert("Złe dane");
+      console.log("Złe dane");
+    }
+  };
+
+  const Logout = () => {
+    setUser({ name: "", email: "" });
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -133,36 +162,45 @@ function App() {
         setCartItems,
       }}
     >
-      <div className="wrapper ">
-        {cartOpened && (
-          <DrawerCart
-            items={cartItems}
-            onClose={() => setCartOpened(false)}
-            onRemove={onRemoveItem}
+      {user.email != "" ? (
+        <div className="wrapper ">
+          {cartOpened && (
+            <DrawerCart
+              items={cartItems}
+              onClose={() => setCartOpened(false)}
+              onRemove={onRemoveItem}
+            />
+          )}
+          <Header
+            onClickCart={() => setCartOpened(true)}
+            onChangeSearchInput={() => onChangeSearchInput()}
           />
-        )}
-        <Header onClickCart={() => setCartOpened(true)} />
 
-        <Routes path="/" exact>
-          <Route
-            path="/"
-            exact
-            element={
-              <Home
-                items={items}
-                cartItems={cartItems}
-                seacrhValue={seacrhValue}
-                onAddToFavorite={onAddToFavorite}
-                onAddToCart={onAddToCart}
-                onChangeSearchInput={onChangeSearchInput}
-                isLoading={isLoading}
-              />
-            }
-          />
-          <Route path="/favorites" exact element={<Favorites />} />
-          <Route path="/orders" exact element={<Orders />} />
-        </Routes>
-      </div>
+          <Routes path="/" exact>
+            <Route path="/" exact element={<Home />} />
+            <Route
+              path="allProducts"
+              exact
+              element={
+                <AllProducts
+                  items={items}
+                  cartItems={cartItems}
+                  seacrhValue={seacrhValue}
+                  onAddToFavorite={onAddToFavorite}
+                  onAddToCart={onAddToCart}
+                  onChangeSearchInput={onChangeSearchInput}
+                  isLoading={isLoading}
+                />
+              }
+            />
+            <Route path="/favorites" exact element={<Favorites />} />
+            <Route path="/orders" exact element={<Orders />} />
+            <Route path="/logout" export element={<LoginForm />} />
+          </Routes>
+        </div>
+      ) : (
+        <LoginForm Login={Login} />
+      )}
     </AppContext.Provider>
   );
 }
