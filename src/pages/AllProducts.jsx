@@ -1,7 +1,7 @@
 import React from 'react'
 import ProductItem from "../components/ProductItem/ProductItem"
 
-function Home({ items, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput,isLoading }) {
+function AllProducts({ items, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearchInput,isLoading }) {
     const renderItems = () => {
         const filteredItems = items.filter((item) =>
         item.title.toLowerCase().includes(seacrhValue.toLowerCase())
@@ -37,4 +37,4 @@ function Home({ items, seacrhValue, onAddToFavorite, onAddToCart, onChangeSearch
     )
 }
 
-export default Home
+export default AllProducts
