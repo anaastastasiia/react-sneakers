@@ -7,7 +7,6 @@ import Header from "./components/Header";
 import DrawerCart from "./components/DrawerCart";
 import AppContext from "./context";
 
-import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 import Orders from "./pages/Orders";
 import AllProducts from "./pages/AllProducts";
@@ -177,7 +176,21 @@ function App() {
           />
 
           <Routes path="/" exact>
-            <Route path="/" exact element={<Home />} />
+            <Route
+              path="/"
+              exact
+              element={
+                <AllProducts
+                  items={items}
+                  cartItems={cartItems}
+                  seacrhValue={seacrhValue}
+                  onAddToFavorite={onAddToFavorite}
+                  onAddToCart={onAddToCart}
+                  onChangeSearchInput={onChangeSearchInput}
+                  isLoading={isLoading}
+                />
+              }
+            />
             <Route
               path="allProducts"
               exact
